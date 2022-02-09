@@ -14,7 +14,7 @@ public class StopWatchTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        stopWatch = new StopWatch();
+        stopWatch = new StopWatch(null);
     }
 
     /**

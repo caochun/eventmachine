@@ -1,10 +1,11 @@
 package com.example.eventmachine;
 
+import org.apache.commons.scxml2.env.AbstractStateMachine;
 import org.apache.commons.scxml2.model.State;
 
-public abstract class StateDelegate {
+public abstract class  StateDelegate <T extends AbstractStateMachine> {
 
-    private String state;
+    private final String state;
 
     public String getState(){
         return this.state;
@@ -14,5 +15,5 @@ public abstract class StateDelegate {
         this.state = state;
     }
 
-    public abstract void onState();
+    public abstract void onState(T t);
 }

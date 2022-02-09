@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Collection;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,10 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.commons.scxml2.model.ModelException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  * Quick GUI to demonstrate the SCXML driven stopwatch.
- *
+ * <p>
  * Separation of UI (this class) from behavior (StopWatch class).
  * UI serves merely as a front to relay user initiated events to StopWatch
  * object, which encapsulates all the behavior of a stopwatch.
@@ -28,19 +33,25 @@ import org.apache.commons.scxml2.model.ModelException;
  *
  * @see StopWatch
  */
+
 public class StopWatchDisplay extends JFrame
         implements ActionListener {
 
     private final StopWatch stopWatch;
     private Image watchImage;
 
-    public StopWatchDisplay() throws ModelException {
+    public StopWatchDisplay(Collection<StateDelegate> delegateList) throws ModelException {
         super("SCXML stopwatch");
-        stopWatch = new StopWatch();
+        stopWatch = new StopWatch(delegateList);
         setupUI();
+
     }
 
     public void actionPerformed(final ActionEvent e) {
+
+
+
+
         final String command = e.getActionCommand();
         if (command.equals("START")) {
             if (start.getText().equals("Start")) {
@@ -107,7 +118,7 @@ public class StopWatchDisplay extends JFrame
     }
 
     private JButton makeButton(final String actionCommand,
-            final String toolTipText, final String altText) {
+                               final String toolTipText, final String altText) {
         final JButton button = new JButton(altText);
         button.setActionCommand(actionCommand);
         button.setToolTipText(toolTipText);
@@ -125,9 +136,6 @@ public class StopWatchDisplay extends JFrame
         }
     }
 
-    public static void main(final String[] args) throws Exception {
-        new StopWatchDisplay();
-    }
 
     private JLabel display, state;
     private JButton start, split;
@@ -138,5 +146,6 @@ public class StopWatchDisplay extends JFrame
             STATE_PREFIX = "<html><font color=\"blue\" size=\"4\"" +
                     ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
             STATE_SUFFIX = "</font></html>";
+
 
 }
