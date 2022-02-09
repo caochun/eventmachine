@@ -1,6 +1,5 @@
 package com.example.eventmachine;
 
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,8 +20,8 @@ public class StopWatch extends AbstractStateMachine {
 
     /** The events for the stop watch. */
     public static final String EVENT_START = "watch.start",
-        EVENT_STOP = "watch.stop", EVENT_SPLIT = "watch.split",
-        EVENT_UNSPLIT = "watch.unsplit", EVENT_RESET = "watch.reset";
+            EVENT_STOP = "watch.stop", EVENT_SPLIT = "watch.split",
+            EVENT_UNSPLIT = "watch.unsplit", EVENT_RESET = "watch.reset";
 
     /** The fragments of the elapsed time. */
     private int hr, min, sec, fract;
@@ -36,8 +35,7 @@ public class StopWatch extends AbstractStateMachine {
     private static final String DELIM = ":", DOT = ".", EMPTY = "", ZERO = "0";
 
     public StopWatch() throws ModelException {
-        super(StopWatch.class.getClassLoader().
-            getResource("stopwatch.xml"));
+        super(StopWatch.class.getClassLoader().getResource("stopwatch.xml"));
     }
 
     // Each method below is the activity corresponding to a state in the
@@ -97,7 +95,7 @@ public class StopWatch extends AbstractStateMachine {
                     if (hr < 99) {
                         hr++;
                     } else {
-                        hr = 0; //wrap
+                        hr = 0; // wrap
                     }
                 }
             }
