@@ -3,8 +3,9 @@ package com.example.eventmachine;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.commons.scxml2.SCXMLListener;
 import org.apache.commons.scxml2.env.AbstractStateMachine;
-import org.apache.commons.scxml2.model.ModelException;
+import org.apache.commons.scxml2.model.*;
 
 /**
  * A SCXML document driven stop watch.
@@ -34,8 +35,33 @@ public class StopWatch extends AbstractStateMachine {
     /** The display decorations. */
     private static final String DELIM = ":", DOT = ".", EMPTY = "", ZERO = "0";
 
+    private Running running = new Running();
+
     public StopWatch() throws ModelException {
         super(StopWatch.class.getClassLoader().getResource("stopwatch.xml"));
+        this.getEngine().addListener(this.getEngine().getStateMachine(), new SCXMLListener() {
+            @Override
+            public void onEntry(EnterableState enterableState) {
+
+                if (enterableState.getId().equals(running.getState())){
+
+                    running.onState();
+                }
+                System.out.println("Entering " + enterableState.toString());
+            }
+
+            @Override
+            public void onExit(EnterableState enterableState) {
+                System.out.println("Exiting " + enterableState.toString());
+
+            }
+
+            @Override
+            public void onTransition(TransitionTarget transitionTarget, TransitionTarget transitionTarget1, Transition transition, String s) {
+                System.out.println("Transiting " + transition.toString() );
+
+            }
+        });
     }
 
     // Each method below is the activity corresponding to a state in the
