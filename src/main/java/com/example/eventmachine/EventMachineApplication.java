@@ -23,7 +23,7 @@ public class EventMachineApplication implements CommandLineRunner {
 
     @Override
     public void run(String...args) throws Exception {
-        System.setProperty("java.awt.headless", "false"); //Disables headless
+        System.setProperty("java.awt.headless", "false");
         new StopWatchDisplay(applicationContext.getBeansOfType(StateDelegate.class).values());
     }
 
